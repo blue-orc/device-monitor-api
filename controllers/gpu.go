@@ -27,7 +27,7 @@ func gpuHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(msg)
 		utilities.RespondBadRequest(w, msg)
 	}
-	fmt.Println(g.Temperature)
+	fmt.Println(*g.Temperature)
 	ip := r.RemoteAddr
 	i := strings.Index(ip, ":")
 	ip = ip[0:i]
