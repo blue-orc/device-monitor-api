@@ -3,7 +3,7 @@ package controllers
 import (
 	"device-monitor-api/monitor"
 	"fmt"
-	"gpu-demonstration-api/utilities"
+	"device-monitor-api/utilities"
 	"net/http"
 	"strings"
 

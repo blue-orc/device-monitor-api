@@ -2,9 +2,9 @@ package controllers
 
 import (
 	"device-monitor-api/monitor"
+	"device-monitor-api/utilities"
 	"fmt"
 	"github.com/shirou/gopsutil/disk"
-	"gpu-demonstration-api/utilities"
 	"net/http"
 	"strings"
 

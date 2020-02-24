@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"gpu-demonstration-api/utilities"
+	"device-monitor-api/utilities"
 	"net/http"
 
 	"github.com/gorilla/mux"

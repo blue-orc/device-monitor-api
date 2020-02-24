@@ -4,7 +4,7 @@ import (
 	"device-monitor-api/monitor"
 	"fmt"
 	"github.com/shirou/gopsutil/net"
-	"gpu-demonstration-api/utilities"
+	"device-monitor-api/utilities"
 	"net/http"
 	"strings"
 
