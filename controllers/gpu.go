@@ -2,9 +2,9 @@ package controllers
 
 import (
 	"device-monitor-api/monitor"
+	"device-monitor-api/utilities"
 	"fmt"
 	"github.com/NVIDIA/gpu-monitoring-tools/bindings/go/nvml"
-	"device-monitor-api/utilities"
 	"net/http"
 	"strings"
 
@@ -25,6 +25,7 @@ func gpuHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(msg)
 		utilities.RespondBadRequest(w, msg)
 	}
+	fmt.Println(g)
 	ip := r.RemoteAddr
 	i := strings.Index(ip, ":")
 	ip = ip[0:i]
