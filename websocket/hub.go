@@ -2,6 +2,7 @@ package websocket
 
 import (
 	"device-monitor-api/monitor"
+	"fmt"
 	"time"
 )
 
@@ -59,7 +60,7 @@ func (h *Hub) retrieveAndPushData() {
 		gs := []byte("GPU")
 		gs = append(gs, byte('\u0017'))
 		gsBytes := monitor.GetGPUMonitorJSON()
-
+		fmt.Println(string(gsBytes))
 		gs = append(gs, gsBytes...)
 		gs = append(gs, byte('>'))
 		h.broadcast <- gs
