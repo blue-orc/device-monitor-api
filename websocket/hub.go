@@ -2,7 +2,6 @@ package websocket
 
 import (
 	"device-monitor-api/monitor"
-	"fmt"
 	"time"
 )
 
