@@ -6,6 +6,7 @@ import (
 	"github.com/shirou/gopsutil/disk"
 	"gpu-demonstration-api/utilities"
 	"net/http"
+	"strings"
 
 	"github.com/gorilla/mux"
 )
@@ -24,7 +25,9 @@ func diskHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(msg)
 		utilities.RespondBadRequest(w, msg)
 	}
-	ip := r.Header.Get("X-Forwarded-For")
+	ip := r.RemoteAddr
+	i := strings.Index(ip, ":")
+	ip = ip[0:i]
 	monitor.UpdateDiskMonitor(ip, d["sda"])
 	utilities.RespondOK(w)
 }

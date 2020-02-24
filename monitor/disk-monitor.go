@@ -19,6 +19,10 @@ type DiskMonitorData struct {
 
 var dm map[string]DiskMonitorData
 
+func DiskMonitorInit() {
+	dm = map[string]DiskMonitorData{}
+}
+
 func UpdateDiskMonitor(ip string, data disk.IOCountersStat) {
 	if val, ok := dm[ip]; !ok {
 		var d DiskMonitorData
@@ -32,6 +36,7 @@ func UpdateDiskMonitor(ip string, data disk.IOCountersStat) {
 		val.ReadCount = data.ReadCount - val.readCountInit
 		val.WriteBytes = data.WriteBytes - val.writeCountInit
 		val.WriteCount = data.WriteCount - val.writeCountInit
+		dm[ip] = val
 	}
 }
 

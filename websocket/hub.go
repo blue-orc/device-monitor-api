@@ -32,7 +32,7 @@ func NewHub() *Hub {
 
 func (h *Hub) retrieveAndPushData() {
 	for {
-		ds := []byte("Network")
+		ds := []byte("Disk")
 		ds = append(ds, byte('\u0017'))
 		dsBytes := monitor.GetDiskMonitorJSON()
 
@@ -40,13 +40,29 @@ func (h *Hub) retrieveAndPushData() {
 		ds = append(ds, byte('>'))
 		h.broadcast <- ds
 
-		bs := []byte("Disk")
+		bs := []byte("Net")
 		bs = append(bs, byte('\u0017'))
 		bsBytes := monitor.GetNetMonitorJSON()
 
 		bs = append(bs, bsBytes...)
 		bs = append(bs, byte('>'))
 		h.broadcast <- bs
+
+		cs := []byte("CPU")
+		cs = append(cs, byte('\u0017'))
+		csBytes := monitor.GetCPUMonitorJSON()
+
+		cs = append(cs, csBytes...)
+		cs = append(cs, byte('>'))
+		h.broadcast <- cs
+
+		gs := []byte("GPU")
+		gs = append(gs, byte('\u0017'))
+		gsBytes := monitor.GetGPUMonitorJSON()
+
+		gs = append(gs, gsBytes...)
+		gs = append(gs, byte('>'))
+		h.broadcast <- gs
 
 		time.Sleep(500 * time.Millisecond)
 	}

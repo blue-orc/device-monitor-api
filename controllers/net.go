@@ -6,6 +6,7 @@ import (
 	"github.com/shirou/gopsutil/net"
 	"gpu-demonstration-api/utilities"
 	"net/http"
+	"strings"
 
 	"github.com/gorilla/mux"
 )
@@ -29,7 +30,9 @@ func netHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(msg)
 		utilities.RespondBadRequest(w, msg)
 	}
-	ip := r.Header.Get("X-Forwarded-For")
+	ip := r.RemoteAddr
+	i := strings.Index(ip, ":")
+	ip = ip[0:i]
 	monitor.UpdateNetMonitor(ip, n[0])
 	utilities.RespondOK(w)
 }

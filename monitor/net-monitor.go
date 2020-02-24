@@ -15,6 +15,10 @@ type NetMonitorData struct {
 
 var nm map[string]NetMonitorData
 
+func NetMonitorInit() {
+	nm = map[string]NetMonitorData{}
+}
+
 func UpdateNetMonitor(ip string, data net.IOCountersStat) {
 	if val, ok := nm[ip]; !ok {
 		var n NetMonitorData
@@ -24,6 +28,7 @@ func UpdateNetMonitor(ip string, data net.IOCountersStat) {
 	} else {
 		val.BytesRecv = data.BytesRecv - val.bytesRecvInit
 		val.PacketsRecv = data.PacketsRecv - val.packetsRecvInit
+		nm[ip] = val
 	}
 }
 

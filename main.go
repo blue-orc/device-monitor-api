@@ -2,6 +2,7 @@ package main
 
 import (
 	"device-monitor-api/controllers"
+	"device-monitor-api/monitor"
 	"device-monitor-api/websocket"
 	"flag"
 	"fmt"
@@ -14,6 +15,10 @@ import (
 var addr = flag.String("addr", ":9002", "websocket service address")
 
 func main() {
+	monitor.DiskMonitorInit()
+	monitor.NetMonitorInit()
+	monitor.CPUMonitorInit()
+	monitor.GPUMonitorInit()
 	mux := mux.NewRouter()
 	initializeControllers(mux)
 	go func() {
@@ -44,6 +49,7 @@ func main() {
 }
 
 func initializeControllers(r *mux.Router) {
+	controllers.InitCPUController(r)
 	controllers.InitDiskController(r)
 	controllers.InitStatusController(r)
 	controllers.InitNetController(r)
