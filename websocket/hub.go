@@ -49,14 +49,6 @@ func (h *Hub) retrieveAndPushData() {
 		bs = append(bs, byte('>'))
 		h.broadcast <- bs
 
-		cs := []byte("CPU")
-		cs = append(cs, byte('\u0017'))
-		csBytes := monitor.GetCPUMonitorJSON()
-
-		cs = append(cs, csBytes...)
-		cs = append(cs, byte('>'))
-		h.broadcast <- cs
-
 		gs := []byte("GPU")
 		gs = append(gs, byte('\u0017'))
 		gsBytes := monitor.GetGPUMonitorJSON()
@@ -64,6 +56,14 @@ func (h *Hub) retrieveAndPushData() {
 		gs = append(gs, gsBytes...)
 		gs = append(gs, byte('>'))
 		h.broadcast <- gs
+
+		cs := []byte("CPU")
+		cs = append(cs, byte('\u0017'))
+		csBytes := monitor.GetCPUMonitorJSON()
+
+		cs = append(cs, csBytes...)
+		cs = append(cs, byte('>'))
+		h.broadcast <- cs
 
 		time.Sleep(500 * time.Millisecond)
 	}
