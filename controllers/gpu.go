@@ -18,7 +18,9 @@ func InitGPUController(r *mux.Router) {
 }
 
 func gpuHandler(w http.ResponseWriter, r *http.Request) {
-	var g []nvml.DeviceStatus
+	var g nvml.DeviceStatus
+	var ga []nvml.DeviceStatus
+	ga = append(ga, g)
 	err := utilities.ReadJsonHttpBody(r, &g)
 	if err != nil {
 		msg := "GPU handler: " + err.Error()
@@ -29,7 +31,7 @@ func gpuHandler(w http.ResponseWriter, r *http.Request) {
 	ip := r.RemoteAddr
 	i := strings.Index(ip, ":")
 	ip = ip[0:i]
-	monitor.UpdateGPUMonitor(ip, g)
+	monitor.UpdateGPUMonitor(ip, ga)
 	utilities.RespondOK(w)
 }
 
