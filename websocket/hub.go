@@ -57,6 +57,8 @@ func (h *Hub) retrieveAndPushData() {
 		gs = append(gs, byte('>'))
 		h.broadcast <- gs
 
+		time.Sleep(500 * time.Millisecond)
+
 		cs := []byte("CPU")
 		cs = append(cs, byte('\u0017'))
 		csBytes := monitor.GetCPUMonitorJSON()
