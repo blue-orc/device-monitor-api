@@ -67,5 +67,6 @@ func initializeControllers(r *mux.Router) {
 	controllers.InitDiskController(r)
 	controllers.InitGPUController(r)
 	controllers.InitStatusController(r)
+	controllers.InitTrainingController(r)
 	controllers.InitNetController(r)
 }
