@@ -1,8 +1,10 @@
 package main
 
 import (
+	"device-monitor-api/constants"
 	"device-monitor-api/controllers"
 	"device-monitor-api/monitor"
+	"device-monitor-api/text-reader"
 	"device-monitor-api/websocket"
 	"flag"
 	"fmt"
@@ -19,6 +21,10 @@ func main() {
 	monitor.NetMonitorInit()
 	monitor.CPUMonitorInit()
 	monitor.GPUMonitorInit()
+
+	constants.AmericanCIDR = reader.Read("america.txt")
+	constants.JapanCIDR = reader.Read("japan.txt")
+
 	mux := mux.NewRouter()
 	initializeControllers(mux)
 	go func() {

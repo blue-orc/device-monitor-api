@@ -1,6 +1,7 @@
 package monitor
 
 import (
+	"device-monitor-api/ipcheck"
 	"encoding/json"
 	"fmt"
 	"github.com/shirou/gopsutil/net"
@@ -11,6 +12,7 @@ type NetMonitorData struct {
 	bytesRecvInit   uint64
 	PacketsRecv     uint64
 	packetsRecvInit uint64
+	Country         string
 }
 
 var nm map[string]NetMonitorData
@@ -24,6 +26,7 @@ func UpdateNetMonitor(ip string, data net.IOCountersStat) {
 		var n NetMonitorData
 		n.bytesRecvInit = data.BytesRecv
 		n.packetsRecvInit = data.PacketsRecv
+		n.Country = ipcheck.GetIPCountry(ip)
 		nm[ip] = n
 	} else {
 		val.BytesRecv = data.BytesRecv - val.bytesRecvInit

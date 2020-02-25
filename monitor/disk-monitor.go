@@ -1,6 +1,7 @@
 package monitor
 
 import (
+	"device-monitor-api/ipcheck"
 	"encoding/json"
 	"fmt"
 	"github.com/shirou/gopsutil/disk"
@@ -15,6 +16,7 @@ type DiskMonitorData struct {
 	readBytesInit  uint64
 	WriteBytes     uint64
 	writeBytesInit uint64
+	Country        string
 }
 
 var dm map[string]DiskMonitorData
@@ -30,6 +32,7 @@ func UpdateDiskMonitor(ip string, data disk.IOCountersStat) {
 		d.readCountInit = data.ReadCount
 		d.writeBytesInit = data.WriteBytes
 		d.writeCountInit = data.WriteCount
+		d.Country = ipcheck.GetIPCountry(ip)
 		dm[ip] = d
 	} else {
 		val.ReadBytes = data.ReadBytes - val.readCountInit
