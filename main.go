@@ -12,6 +12,7 @@ import (
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	"os"
 )
 
 var addr = flag.String("addr", ":9002", "websocket service address")
@@ -22,8 +23,13 @@ func main() {
 	monitor.CPUMonitorInit()
 	monitor.GPUMonitorInit()
 
-	constants.AmericanCIDR = reader.Read("america.txt")
-	constants.JapanCIDR = reader.Read("japan.txt")
+	wd, err := os.Getwd()
+	if err != nil {
+		fmt.Println("main: %s", err.Error())
+	}
+
+	constants.AmericanCIDR = reader.Read(wd + "/america.txt")
+	constants.JapanCIDR = reader.Read(wd + "/japan.txt")
 	fmt.Println(constants.AmericanCIDR[0])
 	fmt.Println(len(constants.AmericanCIDR))
 	mux := mux.NewRouter()
@@ -47,7 +53,7 @@ func main() {
 	})
 
 	fmt.Println("Starting websocket server")
-	err := http.ListenAndServe(*addr, nil)
+	err = http.ListenAndServe(*addr, nil)
 	if err != nil {
 		log.Fatal("WS ListenAndServe: ", err)
 	}
