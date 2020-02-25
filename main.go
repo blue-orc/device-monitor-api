@@ -22,6 +22,7 @@ func main() {
 	monitor.NetMonitorInit()
 	monitor.CPUMonitorInit()
 	monitor.GPUMonitorInit()
+	monitor.TrainingMonitorInit()
 
 	wd, err := os.Getwd()
 	if err != nil {
