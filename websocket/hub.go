@@ -63,6 +63,14 @@ func (h *Hub) retrieveAndPushData() {
 		cs = append(cs, byte('>'))
 		h.broadcast <- cs
 
+		ts := []byte("Training")
+		ts = append(ts, byte('\u0017'))
+		tsBytes := monitor.GetTrainingMonitorJSON()
+
+		ts = append(ts, tsBytes...)
+		ts = append(ts, byte('>'))
+		h.broadcast <- ts
+
 		time.Sleep(500 * time.Millisecond)
 	}
 }
