@@ -24,7 +24,8 @@ func main() {
 
 	constants.AmericanCIDR = reader.Read("america.txt")
 	constants.JapanCIDR = reader.Read("japan.txt")
-
+	fmt.Println(constants.AmericanCIDR[0])
+	fmt.Println(len(constants.AmericanCIDR))
 	mux := mux.NewRouter()
 	initializeControllers(mux)
 	go func() {
