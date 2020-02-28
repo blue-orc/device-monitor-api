@@ -6,7 +6,6 @@ import (
 )
 
 type TrainingStatus struct {
-	CurrentFile       string
 	Step              string
 	TrainingScript    string
 	BatchSize         string
