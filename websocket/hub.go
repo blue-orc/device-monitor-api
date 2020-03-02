@@ -42,7 +42,7 @@ func (h *Hub) retrieveAndPushData() {
 
 		is := []byte("Iftop")
 		is = append(is, byte('\u0017'))
-		isBytes := monitor.GetNetMonitorJSON()
+		isBytes := monitor.GetIftopMonitorJSON()
 
 		is = append(is, isBytes...)
 		is = append(is, byte('>'))
