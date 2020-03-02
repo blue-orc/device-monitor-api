@@ -19,6 +19,7 @@ func InitIftopController(r *mux.Router) {
 func iftopHandler(w http.ResponseWriter, r *http.Request) {
 	var im monitor.IftopMonitor
 	err := utilities.ReadJsonHttpBody(r, &im)
+	fmt.Println(im)
 	if err != nil {
 		msg := "Iftop handler: " + err.Error()
 		fmt.Println(msg)
