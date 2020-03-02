@@ -40,6 +40,14 @@ func (h *Hub) retrieveAndPushData() {
 		ds = append(ds, byte('>'))
 		h.broadcast <- ds
 
+		is := []byte("Iftop")
+		is = append(is, byte('\u0017'))
+		isBytes := monitor.GetNetMonitorJSON()
+
+		is = append(is, isBytes...)
+		is = append(is, byte('>'))
+		h.broadcast <- is
+
 		bs := []byte("Net")
 		bs = append(bs, byte('\u0017'))
 		bsBytes := monitor.GetNetMonitorJSON()
