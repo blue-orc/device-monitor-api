@@ -26,7 +26,7 @@ func NetMonitorInit() {
 }
 
 func UpdateNetMonitor(ip string, data []net.IOCountersStat) {
-	if val, ok := nm[ip]; !ok {
+	if val, ok := nm[ip]; !ok || len(nm[ip]) != len(data) {
 		var ns []NetMonitorData
 		for _, d := range data {
 			var n NetMonitorData
@@ -39,11 +39,11 @@ func UpdateNetMonitor(ip string, data []net.IOCountersStat) {
 		}
 		nm[ip] = ns
 	} else {
-		for i, val := range val {
-			val.BytesRecv = data[i].BytesRecv - val.bytesRecvInit
-			val.PacketsRecv = data[i].PacketsRecv - val.packetsRecvInit
-			val.BytesSent = data[i].BytesSent - val.bytesSentInit
-			val.packetsSentInit = data[i].PacketsSent - val.packetsSentInit
+		for i, d := range data {
+			val[i].BytesRecv = d.BytesRecv - val[i].bytesRecvInit
+			val[i].PacketsRecv = d.PacketsRecv - val[i].packetsRecvInit
+			val[i].BytesSent = d.BytesSent - val[i].bytesSentInit
+			val[i].packetsSentInit = d.PacketsSent - val[i].packetsSentInit
 		}
 		nm[ip] = val
 	}
