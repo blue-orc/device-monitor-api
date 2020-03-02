@@ -39,11 +39,11 @@ func UpdateNetMonitor(ip string, data []net.IOCountersStat) {
 		}
 		nm[ip] = ns
 	} else {
-		for i, d := range data {
-			val[i].BytesRecv = d.BytesRecv - val[i].bytesRecvInit
-			val[i].PacketsRecv = d.PacketsRecv - val[i].packetsRecvInit
-			val[i].BytesSent = d.BytesSent - val[i].bytesSentInit
-			val[i].packetsSentInit = d.PacketsSent - val[i].packetsSentInit
+		for i, val := range val {
+			val.BytesRecv = data[i].BytesRecv - val.bytesRecvInit
+			val.PacketsRecv = data[i].PacketsRecv - val.packetsRecvInit
+			val.BytesSent = data[i].BytesSent - val.bytesSentInit
+			val.packetsSentInit = data[i].PacketsSent - val.packetsSentInit
 		}
 		nm[ip] = val
 	}
