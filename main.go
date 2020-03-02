@@ -20,6 +20,7 @@ var addr = flag.String("addr", ":9002", "websocket service address")
 func main() {
 	monitor.DiskMonitorInit()
 	monitor.NetMonitorInit()
+	monitor.IftopMonitorInit()
 	monitor.CPUMonitorInit()
 	monitor.GPUMonitorInit()
 	monitor.TrainingMonitorInit()
@@ -68,5 +69,6 @@ func initializeControllers(r *mux.Router) {
 	controllers.InitGPUController(r)
 	controllers.InitStatusController(r)
 	controllers.InitTrainingController(r)
+	controllers.InitIftopController(r)
 	controllers.InitNetController(r)
 }
