@@ -7,6 +7,7 @@ import (
 
 type IftopMonitor struct {
 	BytesReceivedRate float64
+	TotalReceived     float64
 }
 
 var im map[string]IftopMonitor
