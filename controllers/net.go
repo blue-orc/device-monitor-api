@@ -2,9 +2,9 @@ package controllers
 
 import (
 	"device-monitor-api/monitor"
+	"device-monitor-api/utilities"
 	"fmt"
 	"github.com/shirou/gopsutil/net"
-	"device-monitor-api/utilities"
 	"net/http"
 	"strings"
 
@@ -33,7 +33,7 @@ func netHandler(w http.ResponseWriter, r *http.Request) {
 	ip := r.RemoteAddr
 	i := strings.Index(ip, ":")
 	ip = ip[0:i]
-	monitor.UpdateNetMonitor(ip, n[0])
+	monitor.UpdateNetMonitor(ip, n)
 	utilities.RespondOK(w)
 }
 
