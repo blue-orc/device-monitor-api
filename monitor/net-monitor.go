@@ -19,35 +19,41 @@ type NetMonitorData struct {
 	Country         string
 }
 
-var nm map[string]NetMonitorData
+var nm map[string][]NetMonitorData
 
 func NetMonitorInit() {
-	nm = map[string]NetMonitorData{}
+	nm = map[string][]NetMonitorData{}
 }
 
-func UpdateNetMonitor(ip string, data net.IOCountersStat) {
+func UpdateNetMonitor(ip string, data []net.IOCountersStat) {
 	if val, ok := nm[ip]; !ok {
-		var n NetMonitorData
-		n.bytesRecvInit = data.BytesRecv
-		n.packetsRecvInit = data.PacketsRecv
-		n.bytesSentInit = data.BytesSent
-		n.packetsSentInit = data.PacketsSent
-		n.Country = ipcheck.GetIPCountry(ip)
-		nm[ip] = n
+		var ns []NetMonitorData
+		for _, d := range data {
+			var n NetMonitorData
+			n.bytesRecvInit = d.BytesRecv
+			n.packetsRecvInit = d.PacketsRecv
+			n.bytesSentInit = d.BytesSent
+			n.packetsSentInit = d.PacketsSent
+			n.Country = ipcheck.GetIPCountry(ip)
+			ns = append(ns, n)
+		}
+		nm[ip] = ns
 	} else {
-		val.BytesRecv = data.BytesRecv - val.bytesRecvInit
-		val.PacketsRecv = data.PacketsRecv - val.packetsRecvInit
-		val.BytesSent = data.BytesSent - val.bytesSentInit
-		val.packetsSentInit = data.PacketsSent - val.packetsSentInit
+		for i, d := range data {
+			val[i].BytesRecv = d.BytesRecv - val[i].bytesRecvInit
+			val[i].PacketsRecv = d.PacketsRecv - val[i].packetsRecvInit
+			val[i].BytesSent = d.BytesSent - val[i].bytesSentInit
+			val[i].packetsSentInit = d.PacketsSent - val[i].packetsSentInit
+		}
 		nm[ip] = val
 	}
 }
 
 func ClearNetMonitor() {
-	nm = map[string]NetMonitorData{}
+	nm = map[string][]NetMonitorData{}
 }
 
-func GetNetMonitor() map[string]NetMonitorData {
+func GetNetMonitor() map[string][]NetMonitorData {
 	return nm
 }
 
