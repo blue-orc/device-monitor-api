@@ -1,8 +1,8 @@
 package monitor
 
 import (
-	"encoding/json"
 	"fmt"
+	"github.com/orcaman/concurrent-map"
 )
 
 type IftopMonitor struct {
@@ -10,26 +10,22 @@ type IftopMonitor struct {
 	TotalReceived     float64
 }
 
-var im map[string]IftopMonitor
+var im cmap.ConcurrentMap
 
 func IftopMonitorInit() {
-	im = map[string]IftopMonitor{}
+	im = cmap.New()
 }
 
 func UpdateIftopMonitor(ip string, data IftopMonitor) {
-	im[ip] = data
+	im.Set(ip, data)
 }
 
 func ClearIftopMonitor() {
-	im = map[string]IftopMonitor{}
-}
-
-func GetIftopMonitor() map[string]IftopMonitor {
-	return im
+	im = cmap.New()
 }
 
 func GetIftopMonitorJSON() (bytes []byte) {
-	bytes, err := json.Marshal(GetIftopMonitor())
+	bytes, err := im.MarshalJSON()
 	if err != nil {
 		fmt.Println("GetIftopMonitor: " + err.Error())
 		return
